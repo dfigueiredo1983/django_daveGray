@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "emmet.includeLanguages": {
     "django-html": "html",
-    "DjangoHTML": "html",      // <- fallback para outras extensões
+    "DjangoHTML": "html", // <- fallback para outras extensões
     "jinja-html": "html",
     "html": "html"
   }
