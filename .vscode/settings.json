@@ -1,10 +1,14 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "editor.tabSize": 4,
   "emmet.includeLanguages": {
     "django-html": "html",
     "DjangoHTML": "html", // <- fallback para outras extensões
     "jinja-html": "html",
     "html": "html"
+  },
+  "[django-html]": {
+    "editor.formatOnSave": false
   }
 }
