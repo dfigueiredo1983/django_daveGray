@@ -21,14 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qg!y@uqj7v%fbu0cdq%hy338s&=0@o7!1#=zg07)thc%7=$2$-'
+# SECRET_KEY = 'django-insecure-qg!y@uqj7vs%fbu0cdq%hy338s&=0@o7!1#=zg07)thc%7=$2$-'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qg!y@uqj7v%fbu0cdq%hy338s&=0@o7!1#=zg07)thc%7=$2$-')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'True')
+# DEBUG = False
+
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ['true', '1', 'yes']
+
 
 
 # Application definition
@@ -80,10 +87,22 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# Banco de dados PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+        'HOST': os.environ.get('POSTGRES_HOST', 'db'),  # Nome do serviço no docker-compose
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -122,10 +141,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/assets'
 
-STATIC_ROOT = BASE_DIR / 'assets'
+MEDIA_URL = '/media/'
+
+# STATIC_ROOT = BASE_DIR / 'assets'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [
